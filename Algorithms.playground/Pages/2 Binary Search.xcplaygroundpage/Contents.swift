@@ -3,12 +3,12 @@
 
 ## Recursion method:
 */
-func findRecursively(in array: ArraySlice<Int>, for value: Int) -> Int? {
-    guard array.count > 0 else { return nil }
+func findRecursively(in slice: ArraySlice<Int>, for value: Int) -> Int? {
+    guard slice.count > 0 else { return nil }
     
-    let middleIndex = array.startIndex + array.count / 2
+    let middleIndex = slice.startIndex + slice.count / 2
     
-    switch array[middleIndex] {
+    switch slice[middleIndex] {
     case let middleValue where middleValue > value:
         return findRecursively(in: array.prefix(upTo: middleIndex), for: value)
     case let middleValue where middleValue < value:
@@ -17,12 +17,25 @@ func findRecursively(in array: ArraySlice<Int>, for value: Int) -> Int? {
         return middleIndex
     }
 }
-
 /*:
 ## Iterative method:
 */
-func findIteratively(in array: Array<Int>, for value: Int) -> Int {
-   return -1
+func findIteratively(in array: Array<Int>, for value: Int) -> Int? {
+    var slice: ArraySlice<Int> = ArraySlice(array)
+    
+    while slice.count > 0 {
+        let middleIndex = slice.startIndex + slice.count / 2
+        
+        switch slice[middleIndex] {
+        case let middleValue where middleValue > value:
+            slice = slice.prefix(upTo: middleIndex)
+        case let middleValue where middleValue < value:
+            slice = slice.suffix(from: middleIndex + 1)
+        default:
+            return middleIndex
+        }
+    }
+    return nil
 }
 
 /*:
@@ -43,4 +56,9 @@ func findIteratively(in array: Array<Int>, for value: Int) -> Int {
         findRecursively(in: array[...], for: valueToFind) == indexToFind
     }
     print("Recursive binary search algorithm is correct:", recursiveResult)
+
+    let iterativeResult = testsRange.allSatisfy { _ in
+        findIteratively(in: array, for: valueToFind) == indexToFind
+    }
+    print("Iterative binary search algorithm is correct:", iterativeResult)
 //: [< Previous](@previous)                    [Home](1%20Home)                    [Next >](@next)
