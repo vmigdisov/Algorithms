@@ -1,8 +1,10 @@
 /*: [< Previous](@previous)                    [Home](1%20Home)                    [Next >](@next)
  # Binary Search
 
-## Recursion method:
+## Recursive method:
 */
+// Time: O(log n)
+// Space: O(log m)
 func findRecursively(in slice: ArraySlice<Int>, for value: Int) -> Int? {
     guard slice.count > 0 else { return nil }
     
@@ -20,6 +22,8 @@ func findRecursively(in slice: ArraySlice<Int>, for value: Int) -> Int? {
 /*:
 ## Iterative method:
 */
+// Time: O(log n)
+// Space: O(1)
 func findIteratively(in array: Array<Int>, for value: Int) -> Int? {
     var slice: ArraySlice<Int> = ArraySlice(array)
     
